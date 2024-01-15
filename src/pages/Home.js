@@ -5,7 +5,7 @@ import { Box, Text } from "@chakra-ui/react";
 export default function Home() {
     return (
         
-        <Box bg='green.100' h='100%' textAlign='center' paddingTop={150}>
+        <Box bg='green.100' textAlign='center' pt={150} pb={400}>
             <Text
                 as='h2'
                 fontSize={50}
