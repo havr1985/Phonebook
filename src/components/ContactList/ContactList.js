@@ -11,7 +11,7 @@ export const ContactList = () => {
     const error = useSelector(selectError);
     return (
         <Container maxW='1280px'>
-            <Flex as='ul' flexDirection='column' alignItems='center' mb={4} mt={4} gap={4}>
+            <Flex as='ul' alignItems='center' mb={8} mt={8} gap={4} wrap='wrap' justifyContent='center'>
             {isLoading && <Loader />}
             {error && <ErrorMsg />}
             {contacts.map(contact => {

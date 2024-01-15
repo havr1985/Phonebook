@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const contactsInstance = axios.create({
-    baseURL: 'http://localhost:3001/api',
+    baseURL: 'https://phonebook-backend-33je.onrender.com/api',
 });
 
 export const setToken = token => {
@@ -19,13 +19,22 @@ export const requestAddContacts = async (newContact) => {
 };
 
 export const requestDeleteContacts = async (contactId) => {
-    const { data } = await contactsInstance.delete(`/contacts/${contactId}`);
-    return data;
+  const { data } = await contactsInstance.delete(`/contacts/${contactId}`);
+  return data;
+};
+
+export const requestUpdateFavorite = async (contactId, formData) => {
+  const { data } = await contactsInstance.patch(`/contacts/${contactId}/favorite`, formData);
+  return data;
+};
+
+export const requestFavoriteContacts = async () => {
+  const { data } = await contactsInstance.get('/contacts?favorite=true');
+  return data.result;
 };
 
 export const requestRegister = async formData => {
     const { data } = await contactsInstance.post('/auth/register', formData);
-    console.log(data)
     return data;
 };
 
@@ -44,3 +53,12 @@ export const requestLogout = async () => {
   const { data } = await contactsInstance.post('/auth/logout');
   return data;
 };
+
+export const requestAvatar = async formData => {
+  const { data } = await contactsInstance.patch('/auth/users/avatars', formData, {
+    headers: {
+      'Content-Type': 'multipart/from-data',
+    },
+  });
+  return data;
+}

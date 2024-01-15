@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { fetchContacts } from "redux/contactsSlice";  
 import { Toaster } from 'react-hot-toast';
 import { Box, Text } from "@chakra-ui/react";
+import { FavoriteFilter } from "components/FavoriteFilter/FavoriteFilter";
 
 
 export default function Contacts() {
@@ -17,7 +18,7 @@ export default function Contacts() {
     }, [dispatch]);
 
     return (
-      <Box bg='green.100'h='100vh'>
+      <Box bg='green.100' pb={6}>
         <Text as='h1'
         fontSize={40}
         fontWeight={900} textAlign='center'
@@ -34,7 +35,10 @@ export default function Contacts() {
         fontFamily='cursive'
         color='#e81c8c'
         mb={7}
-        pt={7}>Contact List</Text>
+          pt={7}>Contact List</Text>
+        <Box display='flex' justifyContent='center' mb={5}>
+          <FavoriteFilter />
+        </Box>
         <SearchFilter />
         <ContactList />
         <Toaster
@@ -42,5 +46,4 @@ export default function Contacts() {
           reverseOrder={false}/>
       </Box>
     )
-
 };

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { requestRegister, setToken, requestLogin, requestRefreshUser, requestLogout } from "services/Api";
+import { requestRegister, setToken, requestLogin, requestRefreshUser, requestLogout, requestAvatar } from "services/Api";
 
 export const registerThunk = createAsyncThunk(
   'auth/register',
@@ -55,10 +55,23 @@ export const logOutThunk = createAsyncThunk(
   'auth/logOut',
   async (_, thunkAPI) => {
     try {
-      await requestLogout();
+      const { avatarURL } = await requestLogout();
 
-      return;
+      return avatarURL;
     } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const changeAvatarThunk = createAsyncThunk(
+  'auth/users/changeAvatar',
+  async (formData, thunkAPI) => {
+    try {
+     const data = await requestAvatar(formData);
+      return data.avatarURL;
+    }
+    catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -69,6 +82,7 @@ const INITIAL_STATE = {
   user: {
     email: null,
     name: null,
+    avatarURL: '',
   },
   register: false,
   authenticated: false,
@@ -109,6 +123,12 @@ const authSlice = createSlice({
       .addCase(logOutThunk.fulfilled, () => {
         return INITIAL_STATE;
       })
+      // ---------- CHANGE AVATAR USER ----------------
+      .addCase(changeAvatarThunk.fulfilled, (state, action) => {
+        state.user.avatarURL = action.payload;
+      })
+
+
 
       .addMatcher(
         isAnyOf(

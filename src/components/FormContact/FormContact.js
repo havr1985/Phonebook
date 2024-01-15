@@ -27,7 +27,8 @@ export const FormContact = () => {
         .matches(/^[0-9\-+']+$/, 'Only numbers and -')
             .required('This field is required!'),
         email: Yup.string()
-        .email(),
+            .email()
+        .required('This field is required!'),
     }),
             onSubmit: (values, actions) => {
                 const check = contacts.some(({ name }) => name === values.name);
@@ -64,7 +65,7 @@ export const FormContact = () => {
                     </FormControl>
 
                     <FormControl isInvalid={formik.touched.phone && formik.errors.phone}>
-                        <FormLabel htmlFor='number'>Phone</FormLabel>
+                        <FormLabel htmlFor='phone'>Phone</FormLabel>
                             <Input name="phone"
                                 id='phone'
                                 type="tel"
