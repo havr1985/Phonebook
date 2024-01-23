@@ -37,7 +37,7 @@ export const refreshThunk = createAsyncThunk(
 
       return authData; 
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return ;
     }
   },
   {
